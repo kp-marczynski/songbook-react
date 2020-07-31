@@ -1,5 +1,16 @@
 import React from 'react';
-import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {
+    IonContent,
+    IonHeader,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    useIonViewDidEnter
+} from '@ionic/react';
+import {setPageTitle} from "../utils/title";
 
 const QueuePage: React.FC = () => {
     const songs = [
@@ -16,6 +27,7 @@ const QueuePage: React.FC = () => {
             title: "Kiss to build a dream on"
         }
     ]
+    useIonViewDidEnter(()=>setPageTitle("Queue"))
     return (
         <IonPage>
             <IonHeader>

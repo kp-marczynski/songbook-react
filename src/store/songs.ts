@@ -9,7 +9,7 @@ const slice = createSlice({
         //         author: "Wizard of Oz",
         //         language: "EN"
         // }})
-        value: [
+        index: [
             {
                 id: "1",
                 title: "Yellow Brick Road",
@@ -38,11 +38,11 @@ const slice = createSlice({
     },
     reducers: {
         addSong: (state, action) => {
-            state.value.push(action.payload)
+            state.index.push(action.payload)
         }
     },
 });
 
 export const {addSong} = slice.actions
-export const selectSongIndex = (state: any) => state.songs.value
+export const selectSongIndex = (state: any) => state.songs.index
 export default slice.reducer

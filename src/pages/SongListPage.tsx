@@ -17,6 +17,7 @@ import {SongOverview} from "../model/SongOverview.model";
 import {Link} from "react-router-dom";
 import {addSong, selectSongIndex} from "../store/songs";
 import VirtualSongList from "../components/VirtualSongList";
+import {setPageTitle} from "../utils/title";
 
 const SongListPage: React.FC = () => {
     const songs: SongOverview[] = useSelector(selectSongIndex)
@@ -39,19 +40,7 @@ const SongListPage: React.FC = () => {
         // setSongs(searchSongs())
     }
 
-    useIonViewDidEnter(() => {
-        console.log('ionViewDidEnter event fired');
-    });
-
-    useIonViewDidLeave(() => {
-        console.log('ionViewDidLeave event fired');
-    });
-
-    useIonViewWillEnter(() => {
-        console.log('ionViewWillEnter event fired');
-
-
-    });
+    useIonViewDidEnter(() => setPageTitle("List"))
 
     // function searchSongs(): SongOverview[] {
     //     for (let key of Array.from(query.keys())) {

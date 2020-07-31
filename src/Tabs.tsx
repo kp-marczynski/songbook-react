@@ -2,7 +2,7 @@ import React from "react";
 import {Redirect, Route} from "react-router-dom";
 import {IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/react";
 import SongListPage from "./pages/SongListPage";
-import SongDetails from "./components/SongDetails";
+import SongDetailsPage from "./pages/SongDetailsPage";
 import QueuePage from "./pages/QueuePage";
 import SettingsPage from "./pages/SettingsPage";
 import {headset, musicalNotes, settings} from "ionicons/icons";
@@ -11,7 +11,7 @@ const Tabs: React.FC = () =>
     <IonTabs>
         <IonRouterOutlet>
             <Route path="/song" component={SongListPage} exact={true}/>
-            <Route path="/song/:songId" component={SongDetails} exact={true}/>
+            <Route path="/song/:songId" component={SongDetailsPage} exact={true}/>
             <Route path="/queue" component={QueuePage}/>
             <Route path="/settings" component={SettingsPage}/>
             <Route path="/" render={() => <Redirect to="/song"/>} exact={true}/>
