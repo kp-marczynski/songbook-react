@@ -1,8 +1,7 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 
-const Settings: React.FC = () => {
+const SettingsPage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -16,10 +15,9 @@ const Settings: React.FC = () => {
             <IonTitle size="large">Tab 3</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 3 page" />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Settings;
+export default SettingsPage;

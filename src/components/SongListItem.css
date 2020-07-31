@@ -1,0 +1,11 @@
+.song-list-item {
+    padding-left: 1rem;
+    padding-top: 10px;
+    background-color: var(--ion-item-background);
+    border-bottom: 1px solid var(--ion-border-color);
+}
+
+.song-list-item:hover {
+    cursor: pointer;
+    background-color: var(--ion-color-light-tint);
+}
