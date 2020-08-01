@@ -6,12 +6,15 @@ import SongDetailsPage from "./pages/SongDetailsPage";
 import QueuePage from "./pages/QueuePage";
 import SettingsPage from "./pages/SettingsPage";
 import {headset, musicalNotes, settings} from "ionicons/icons";
+import SongEditPage from "./pages/SongEditPage";
 
 const Tabs: React.FC = () =>
     <IonTabs>
         <IonRouterOutlet>
             <Route path="/song" component={SongListPage} exact={true}/>
-            <Route path="/song/:songId" component={SongDetailsPage} exact={true}/>
+            <Route path="/song/:songId/view" component={SongDetailsPage} exact={true}/>
+            <Route path="/song/:songId/edit" component={SongEditPage} exact={true}/>
+            <Route path="/song/new" component={SongEditPage} exact={true}/>
             <Route path="/queue" component={QueuePage}/>
             <Route path="/settings" component={SettingsPage}/>
             <Route path="/" render={() => <Redirect to="/song"/>} exact={true}/>

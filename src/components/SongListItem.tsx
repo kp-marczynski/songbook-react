@@ -13,7 +13,7 @@ const SongListItem: React.FC<OwnProps> = ({song, style}) => {
     const history = useHistory()
 
     function handleClickOnItem() {
-        history.push(`/song/${song.title}`)
+        history.push(`/song/${song.title}/view`)
     }
 
     return <div className={"song-list-item"} style={style} onClick={handleClickOnItem}>

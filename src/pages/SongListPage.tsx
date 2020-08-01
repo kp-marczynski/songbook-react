@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {
     IonButton,
-    IonContent,
-    IonHeader,
+    IonContent, IonFab, IonFabButton,
+    IonHeader, IonIcon,
     IonPage,
     IonTitle,
     IonToolbar,
@@ -18,6 +18,7 @@ import {Link} from "react-router-dom";
 import {addSong, selectSongIndex} from "../store/songs";
 import VirtualSongList from "../components/VirtualSongList";
 import {setPageTitle} from "../utils/title";
+import {add} from "ionicons/icons";
 
 const SongListPage: React.FC = () => {
     const songs: SongOverview[] = useSelector(selectSongIndex)
@@ -78,6 +79,11 @@ const SongListPage: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
+                <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                    <IonFabButton routerLink={'/song/new'}>
+                        <IonIcon icon={add} />
+                    </IonFabButton>
+                </IonFab>
                 <IonHeader collapse="condense">
                     <IonToolbar>
                         <IonTitle size="large">Tab 1</IonTitle>
