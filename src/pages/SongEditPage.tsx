@@ -3,9 +3,9 @@ import {IonButton, IonList, IonPage, useIonViewDidEnter} from "@ionic/react";
 import RequiredFormTextInput from "../components/RequiredFormInput";
 import {Song} from "../model/Song.model";
 import {useDispatch, useSelector} from "react-redux";
-import {addSong, selectSong} from "../store/songs";
+import {addSong, attributePredicate, selectSongBy} from "../store/songs";
 import {useHistory, useParams} from "react-router";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 const SongEditPage: React.FC = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -16,8 +16,8 @@ const SongEditPage: React.FC = () => {
     const [id, setId] = useState('')
 
     let {songId} = useParams()
-    let song: Song = useSelector(selectSong(songId))
-    useIonViewDidEnter(()=>{
+    let song: Song = useSelector(selectSongBy)(attributePredicate('id', songId))[0]
+    useIonViewDidEnter(() => {
         if (song) {
             setId(song.id)
             setAuthor(song.author)
@@ -45,7 +45,17 @@ const SongEditPage: React.FC = () => {
         }
         dispatch(addSong(song))
         history.push("/song")
+        resetState()
     };
+
+    const resetState = () => {
+        setId('')
+        setAuthor('')
+        setTitle('')
+        setContent('')
+        setLanguage('')
+        setFormSubmitted(false)
+    }
 
     return <IonPage>
         <form onSubmit={submit}>

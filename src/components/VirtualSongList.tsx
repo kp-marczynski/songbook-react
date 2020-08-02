@@ -1,11 +1,11 @@
 import React from "react";
-import {SongOverview} from "../model/SongOverview.model";
 import {FixedSizeList} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import SongListItem from "./SongListItem";
+import {Song} from "../model/Song.model";
 
 interface OwnProps {
-    songs: SongOverview[]
+    songs: Song[]
 }
 
 const VirtualSongList: React.FC<OwnProps> = ({songs}) => {

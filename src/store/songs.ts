@@ -39,13 +39,15 @@ const slice = createSlice({
     },
     reducers: {
         addSong: (state, action) => {
-            state.index = state.index.filter(song=> song.id !== action.payload.id)
+            state.index = state.index.filter(song => song.id !== action.payload.id)
             state.index.push(action.payload)
         }
     },
 });
 
 export const {addSong} = slice.actions
-export const selectSongIndex = (state: any) => state.songs.index
-export const selectSong = (id: string) => (state: any) => state.songs.index.find((song: Song) => song.id == id)
+export const selectSongBy = (state: any) => (predicate: (song: Song) => boolean) => state.songs.index.filter(predicate)
+export const attributePredicate = (attributeName: string, attributeValue: any) => (song: Song) => (song as any)[attributeName] === attributeValue
+export const combinePredicates = (...predicates: ((song: Song) => boolean)[]) => (song: Song) => predicates.every(predicate => predicate(song))
+
 export default slice.reducer

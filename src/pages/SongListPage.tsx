@@ -10,73 +10,72 @@ import {
     IonToolbar,
     useIonViewDidEnter
 } from '@ionic/react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useHistory, useLocation} from "react-router";
+import {useSelector} from 'react-redux';
+import {useLocation} from "react-router";
 import {Link} from "react-router-dom";
-import {selectSongIndex} from "../store/songs";
 import VirtualSongList from "../components/VirtualSongList";
 import {setPageTitle} from "../utils/title";
 import {add} from "ionicons/icons";
-import {Song} from "../model/Song.model";
+import {attributePredicate, combinePredicates, selectSongBy} from "../store/songs";
+
+const hierarchy = ["author", "title"]
 
 const SongListPage: React.FC = () => {
-    const songs: Song[] = useSelector(selectSongIndex)
-    const dispatch = useDispatch()
-    const [hierarchy, setHierarchy] = useState(["language", "author", "title"])
+    const selector = useSelector(selectSongBy)
+    const [hierarchyData, setHierarchyData] = useState([] as string[])
     const [search, setSearch] = useState("")
-    const history = useHistory()
+    const songs = selector(combinePredicates(...hierarchyData.map((value, index) => attributePredicate(hierarchy[index], value))))
 
     const location = useLocation()
 
-    function useQuery() {
-        return new URLSearchParams(useLocation().search);
-    }
-
-    let query = useQuery();
     if (location.search !== search) {
+        const query = new URLSearchParams(location.search);
         setSearch(location.search)
-        // setSongs(searchSongs())
+
+        const keys = Array.from(query.keys())
+        const temp: string[] = [];
+        for (let i = 0; i < keys.length && keys.find(key => key === hierarchy[i]); i++) {
+            temp.push(query.get(keys[i])!)
+        }
+        setHierarchyData(temp)
     }
 
     useIonViewDidEnter(() => setPageTitle("Songs"))
 
-    // function searchSongs(): SongOverview[] {
-    //     for (let key of Array.from(query.keys())) {
-    //         return songsInit.filter(song => (song as any)[key] == query.get(key))
-    //     }
-    //     let hierarchyLevel = 0;
-    //     let temp: SongOverview[] = songsInit;
-    //     while (hierarchyLevel < hierarchy.length - 1 && query.get(hierarchy[hierarchyLevel])) {
-    //         temp = temp.filter(song => (song as any)[hierarchy[hierarchyLevel]] == query.get(hierarchy[hierarchyLevel]))
-    //         hierarchyLevel++;
-    //     }
-    //     return songsInit;
-    // }
-
-    return (
-        <IonPage>
-            <IonHeader>
+    return <IonPage>
+        <IonHeader>
+            <IonToolbar>
+                <IonTitle>
+                    <Link to={"/song"}>All songs</Link> {
+                    hierarchyData.map((value, index) =>
+                        <span key={index}>
+                            /
+                            <Link to={"/song?" +
+                            hierarchyData.slice(0, index + 1).map((value2, index2) => hierarchy[index2] + "=" + value2).join("&")}>
+                                {console.log(hierarchyData.slice(0, index + 1).map((value2, index2) => hierarchy[index2] + "=" + value2).join("&"))}
+                                {console.log(value)}
+                                {value}
+                            </Link>
+                        </span>
+                    )
+                }
+                </IonTitle>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent>
+            <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                <IonFabButton routerLink={'/song/new'}>
+                    <IonIcon icon={add}/>
+                </IonFabButton>
+            </IonFab>
+            <IonHeader collapse="condense">
                 <IonToolbar>
-                    <IonTitle>
-                        <Link to={"/song"}>All songs</Link> / <Link to={"/song?author=Aerosmith"}>Aerosmith</Link>
-                    </IonTitle>
+                    <IonTitle size="large">Tab 1</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
-                <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                    <IonFabButton routerLink={'/song/new'}>
-                        <IonIcon icon={add}/>
-                    </IonFabButton>
-                </IonFab>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Tab 1</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <VirtualSongList songs={songs}/>
-            </IonContent>
-        </IonPage>
-    );
+            <VirtualSongList songs={songs}/>
+        </IonContent>
+    </IonPage>;
 };
 
 export default SongListPage;

@@ -13,13 +13,13 @@ import {
 } from "@ionic/react";
 import {setPageTitle} from "../utils/title";
 import {useSelector} from "react-redux";
-import {selectSong} from "../store/songs";
 import {Song} from "../model/Song.model";
 import {pencil} from "ionicons/icons";
+import {attributePredicate, selectSongBy} from "../store/songs";
 
 const SongDetailsPage: React.FC = () => {
     let {songId} = useParams()
-    let song: Song = useSelector(selectSong(songId))
+    let song: Song = useSelector(selectSongBy)(attributePredicate('id', songId))[0]
     useIonViewDidEnter(() => setPageTitle(`${song.title} by ${song.author}`))
     return <IonPage id={"song-details"}>
         <IonHeader>
