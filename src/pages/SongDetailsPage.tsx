@@ -1,5 +1,5 @@
-import React from "react";
-import {Redirect, useHistory, useParams} from "react-router";
+import React, {useState} from "react";
+import {Redirect, useParams} from "react-router";
 import {
     IonBackButton,
     IonButton,
@@ -7,19 +7,28 @@ import {
     IonContent,
     IonHeader,
     IonIcon,
+    IonItem,
+    IonList,
     IonPage,
+    IonPopover,
     IonToolbar,
     useIonViewDidEnter
 } from "@ionic/react";
 import {setPageTitle} from "../utils/title";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Song} from "../model/Song.model";
-import {pencil} from "ionicons/icons";
-import {attributePredicate, selectSongsBy} from "../store/songs";
+import {ellipsisVertical} from "ionicons/icons";
+import {attributePredicate, removeSong, selectSongsBy} from "../store/songs";
 
 const SongDetailsPage: React.FC = () => {
+    const [showActionSheet, setShowActionSheet] = useState(false);
     let {songId} = useParams()
+    const dispatch = useDispatch()
     let song: Song = useSelector(selectSongsBy)(attributePredicate('id', songId))[0]
+
+    const handleDelete = () => {
+        dispatch(removeSong(songId))
+    }
 
     useIonViewDidEnter(() => setPageTitle(`${song?.title} by ${song?.author}`))
     return song ?
@@ -30,11 +39,20 @@ const SongDetailsPage: React.FC = () => {
                         <IonBackButton defaultHref="/song"/>
                     </IonButtons>
                     <IonButtons slot="end">
-                        <IonButton routerLink={`/song/${songId}/edit`}>
-                            <IonIcon icon={pencil} slot="icon-only"/>
+                        <IonButton onClick={() => setShowActionSheet(true)}>
+                            <IonIcon icon={ellipsisVertical} slot="icon-only"/>
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>
+                <IonPopover
+                    isOpen={showActionSheet}
+                    onDidDismiss={e => setShowActionSheet(false)}>
+                    <IonList>
+                        <IonItem routerLink={`/song/${song.author}/${song.title}-${songId}/edit`}
+                                 onClick={() => setShowActionSheet(false)}>Edit</IonItem>
+                        <IonItem onClick={() => handleDelete()}>Delete</IonItem>
+                    </IonList>
+                </IonPopover>
             </IonHeader>
             <IonContent>
                 {JSON.stringify(song)}

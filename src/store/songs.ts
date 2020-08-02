@@ -1,6 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {Song} from "../model/Song.model";
 
+const songComparator = (first: Song, second: Song) => first.author === second.author ? first.title.localeCompare(second.title) : first.author.localeCompare(second.author)
+
+export const attributePredicate = (attributeName: string, attributeValue: any) => (song: Song) => (song as any)[attributeName] === attributeValue
+export const combinePredicates = (...predicates: ((song: Song) => boolean)[]) => (song: Song) => predicates.every(predicate => predicate(song))
+
 const slice = createSlice({
     name: 'songs',
     initialState: {
@@ -10,7 +15,7 @@ const slice = createSlice({
         //         author: "Wizard of Oz",
         //         language: "EN"
         // }})
-        index: [
+        index: ([
             {
                 id: "1",
                 title: "Yellow Brick Road",
@@ -35,19 +40,21 @@ const slice = createSlice({
                 author: "Aerosmith",
                 language: "EN"
             }
-        ]
+        ] as Song[]).sort(songComparator)
     },
     reducers: {
         addSong: (state, action) => {
             state.index = state.index.filter(song => song.id !== action.payload.id)
             state.index.push(action.payload)
+            state.index = state.index.sort(songComparator)
+        },
+        removeSong: (state, action) => {
+            state.index = state.index.filter(song => song.id !== action.payload)
         }
     },
 });
 
-export const {addSong} = slice.actions
+export const {addSong, removeSong} = slice.actions
 export const selectSongsBy = (state: any) => (predicate?: (song: Song) => boolean) => predicate ? state.songs.index.filter(predicate) : state.songs.index
-export const attributePredicate = (attributeName: string, attributeValue: any) => (song: Song) => (song as any)[attributeName] === attributeValue
-export const combinePredicates = (...predicates: ((song: Song) => boolean)[]) => (song: Song) => predicates.every(predicate => predicate(song))
 
 export default slice.reducer

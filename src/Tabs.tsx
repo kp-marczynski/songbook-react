@@ -25,14 +25,14 @@ const Tabs: React.FC = () =>
                 <IonIcon icon={musicalNotes}/>
                 <IonLabel>Songs</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="queue" href="/queue">
-                <IonIcon icon={headset}/>
-                <IonLabel>Playlist</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="settings" href="/settings">
-                <IonIcon icon={settings}/>
-                <IonLabel>Settings</IonLabel>
-            </IonTabButton>
+            {/*<IonTabButton tab="queue" href="/queue">*/}
+            {/*    <IonIcon icon={headset}/>*/}
+            {/*    <IonLabel>Playlist</IonLabel>*/}
+            {/*</IonTabButton>*/}
+            {/*<IonTabButton tab="settings" href="/settings">*/}
+            {/*    <IonIcon icon={settings}/>*/}
+            {/*    <IonLabel>Settings</IonLabel>*/}
+            {/*</IonTabButton>*/}
         </IonTabBar>
     </IonTabs>
 
