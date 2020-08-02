@@ -1,34 +1,31 @@
 import React, {useState} from 'react';
 import {
-    IonButton,
-    IonContent, IonFab, IonFabButton,
-    IonHeader, IonIcon,
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonHeader,
+    IonIcon,
     IonPage,
     IonTitle,
     IonToolbar,
-    useIonViewDidEnter,
-    useIonViewDidLeave,
-    useIonViewWillEnter,
-    useIonViewWillLeave
+    useIonViewDidEnter
 } from '@ionic/react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useLocation} from "react-router";
-import {SongOverview} from "../model/SongOverview.model";
 import {Link} from "react-router-dom";
-import {addSong, selectSongIndex} from "../store/songs";
+import {selectSongIndex} from "../store/songs";
 import VirtualSongList from "../components/VirtualSongList";
 import {setPageTitle} from "../utils/title";
 import {add} from "ionicons/icons";
+import {Song} from "../model/Song.model";
 
 const SongListPage: React.FC = () => {
-    const songs: SongOverview[] = useSelector(selectSongIndex)
+    const songs: Song[] = useSelector(selectSongIndex)
     const dispatch = useDispatch()
     const [hierarchy, setHierarchy] = useState(["language", "author", "title"])
     const [search, setSearch] = useState("")
     const history = useHistory()
-    console.log("history")
-    console.log(history)
-    console.log(useLocation())
+
     const location = useLocation()
 
     function useQuery() {
@@ -56,19 +53,6 @@ const SongListPage: React.FC = () => {
     //     return songsInit;
     // }
 
-    function handleAddSong() {
-        dispatch(addSong({
-            id: Math.random() + "",
-            title: "Thunderstruck",
-            author: "AC/DC",
-            language: "EN"
-        }))
-    }
-
-    useIonViewWillLeave(() => {
-        console.log('ionViewWillLeave event fired');
-    });
-
     return (
         <IonPage>
             <IonHeader>
@@ -81,7 +65,7 @@ const SongListPage: React.FC = () => {
             <IonContent>
                 <IonFab vertical="bottom" horizontal="end" slot="fixed">
                     <IonFabButton routerLink={'/song/new'}>
-                        <IonIcon icon={add} />
+                        <IonIcon icon={add}/>
                     </IonFabButton>
                 </IonFab>
                 <IonHeader collapse="condense">
@@ -91,7 +75,6 @@ const SongListPage: React.FC = () => {
                 </IonHeader>
                 <VirtualSongList songs={songs}/>
             </IonContent>
-            <IonButton expand="full" onClick={handleAddSong}>Add song</IonButton>
         </IonPage>
     );
 };

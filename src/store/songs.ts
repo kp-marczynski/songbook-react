@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {Song} from "../model/Song.model";
 
 const slice = createSlice({
     name: 'songs',
@@ -38,6 +39,7 @@ const slice = createSlice({
     },
     reducers: {
         addSong: (state, action) => {
+            state.index = state.index.filter(song=> song.id !== action.payload.id)
             state.index.push(action.payload)
         }
     },
@@ -45,4 +47,5 @@ const slice = createSlice({
 
 export const {addSong} = slice.actions
 export const selectSongIndex = (state: any) => state.songs.index
+export const selectSong = (id: string) => (state: any) => state.songs.index.find((song: Song) => song.id == id)
 export default slice.reducer
