@@ -1,5 +1,5 @@
 import React from "react";
-import {useParams} from "react-router";
+import {Redirect, useHistory, useParams} from "react-router";
 import {
     IonBackButton,
     IonButton,
@@ -15,30 +15,32 @@ import {setPageTitle} from "../utils/title";
 import {useSelector} from "react-redux";
 import {Song} from "../model/Song.model";
 import {pencil} from "ionicons/icons";
-import {attributePredicate, selectSongBy} from "../store/songs";
+import {attributePredicate, selectSongsBy} from "../store/songs";
 
 const SongDetailsPage: React.FC = () => {
     let {songId} = useParams()
-    let song: Song = useSelector(selectSongBy)(attributePredicate('id', songId))[0]
-    useIonViewDidEnter(() => setPageTitle(`${song.title} by ${song.author}`))
-    return <IonPage id={"song-details"}>
-        <IonHeader>
-            <IonToolbar>
-                <IonButtons slot="start">
-                    <IonBackButton defaultHref="/song"/>
-                </IonButtons>
-                <IonButtons slot="end">
-                    <IonButton routerLink={`/song/${songId}/edit`}>
-                        <IonIcon icon={pencil} slot="icon-only"/>
-                    </IonButton>
+    let song: Song = useSelector(selectSongsBy)(attributePredicate('id', songId))[0]
 
-                </IonButtons>
-            </IonToolbar>
-        </IonHeader>
-        <IonContent>
-            {JSON.stringify(song)}
-        </IonContent>
-    </IonPage>
+    useIonViewDidEnter(() => setPageTitle(`${song?.title} by ${song?.author}`))
+    return song ?
+        <IonPage id={"song-details"}>
+            <IonHeader>
+                <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/song"/>
+                    </IonButtons>
+                    <IonButtons slot="end">
+                        <IonButton routerLink={`/song/${songId}/edit`}>
+                            <IonIcon icon={pencil} slot="icon-only"/>
+                        </IonButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent>
+                {JSON.stringify(song)}
+            </IonContent>
+        </IonPage>
+        : <Redirect to={"/song"}/>
 }
 
 export default SongDetailsPage;

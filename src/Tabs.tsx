@@ -12,9 +12,10 @@ const Tabs: React.FC = () =>
     <IonTabs>
         <IonRouterOutlet>
             <Route path="/song" component={SongListPage} exact={true}/>
-            <Route path="/song/:songId/view" component={SongDetailsPage} exact={true}/>
-            <Route path="/song/:songId/edit" component={SongEditPage} exact={true}/>
-            <Route path="/song/new" component={SongEditPage} exact={true}/>
+            <Route path="/song/:author" component={SongListPage} exact={true}/>
+            <Route path="/song/:author/:title-:songId" component={SongDetailsPage} exact={true}/>
+            <Route path="/song/:author/:title-:songId/edit" component={SongEditPage} exact={true}/>
+            <Route path="/song/new/:songId" component={SongEditPage} exact={true}/>
             <Route path="/queue" component={QueuePage}/>
             <Route path="/settings" component={SettingsPage}/>
             <Route path="/" render={() => <Redirect to="/song"/>} exact={true}/>

@@ -1,8 +1,8 @@
 import React from "react";
 import {IonLabel} from "@ionic/react";
-import './SongListItem.css'
 import {useHistory} from "react-router";
 import {Song} from "../model/Song.model";
+import './SongListItem.css'
 
 interface OwnProps {
     song: Song,
@@ -13,7 +13,7 @@ const SongListItem: React.FC<OwnProps> = ({song, style}) => {
     const history = useHistory()
 
     function handleClickOnItem() {
-        history.push(`/song/${song.id}/view`)
+        history.push(`/song/${song.author}/${song.title}-${song.id}`)
     }
 
     return <div className={"song-list-item"} style={style} onClick={handleClickOnItem}>

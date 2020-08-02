@@ -3,9 +3,9 @@ import {IonButton, IonList, IonPage, useIonViewDidEnter} from "@ionic/react";
 import RequiredFormTextInput from "../components/RequiredFormInput";
 import {Song} from "../model/Song.model";
 import {useDispatch, useSelector} from "react-redux";
-import {addSong, attributePredicate, selectSongBy} from "../store/songs";
+import {addSong, attributePredicate, selectSongsBy} from "../store/songs";
 import {useHistory, useParams} from "react-router";
-import {v4 as uuidv4} from 'uuid';
+import * as shortId from 'shortid';
 
 const SongEditPage: React.FC = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -16,7 +16,7 @@ const SongEditPage: React.FC = () => {
     const [id, setId] = useState('')
 
     let {songId} = useParams()
-    let song: Song = useSelector(selectSongBy)(attributePredicate('id', songId))[0]
+    let song: Song = useSelector(selectSongsBy)(attributePredicate('id', songId))[0]
     useIonViewDidEnter(() => {
         if (song) {
             setId(song.id)
@@ -25,7 +25,7 @@ const SongEditPage: React.FC = () => {
             setLanguage(song.language)
             setContent(song.content)
         } else {
-            setId(uuidv4())
+            setId(songId ?? shortId.generate())
         }
     })
 

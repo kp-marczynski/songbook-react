@@ -46,7 +46,7 @@ const slice = createSlice({
 });
 
 export const {addSong} = slice.actions
-export const selectSongBy = (state: any) => (predicate: (song: Song) => boolean) => state.songs.index.filter(predicate)
+export const selectSongsBy = (state: any) => (predicate?: (song: Song) => boolean) => predicate ? state.songs.index.filter(predicate) : state.songs.index
 export const attributePredicate = (attributeName: string, attributeValue: any) => (song: Song) => (song as any)[attributeName] === attributeValue
 export const combinePredicates = (...predicates: ((song: Song) => boolean)[]) => (song: Song) => predicates.every(predicate => predicate(song))
 
