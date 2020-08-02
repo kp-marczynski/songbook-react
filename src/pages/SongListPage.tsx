@@ -41,7 +41,7 @@ const SongListPage: React.FC = () => {
         // setSongs(searchSongs())
     }
 
-    useIonViewDidEnter(() => setPageTitle("List"))
+    useIonViewDidEnter(() => setPageTitle("Songs"))
 
     // function searchSongs(): SongOverview[] {
     //     for (let key of Array.from(query.keys())) {
