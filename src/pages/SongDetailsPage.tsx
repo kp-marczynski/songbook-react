@@ -8,6 +8,8 @@ import {
     IonHeader,
     IonIcon,
     IonItem,
+    IonItemDivider,
+    IonLabel,
     IonList,
     IonPage,
     IonPopover,
@@ -19,6 +21,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {Song} from "../model/Song.model";
 import {ellipsisVertical} from "ionicons/icons";
 import {attributePredicate, removeSong, selectSongsBy} from "../store/songs";
+import {parseChordPro} from "../utils/chordpro";
+
+import "./SongDetailsPage.css"
+import {IChordProGroup} from "../model/chord-pro-group.model";
 
 const SongDetailsPage: React.FC = () => {
     const [showActionSheet, setShowActionSheet] = useState(false);
@@ -29,6 +35,7 @@ const SongDetailsPage: React.FC = () => {
     const handleDelete = () => {
         dispatch(removeSong(songId))
     }
+    const formattedContent = parseChordPro(song?.content ?? "")
 
     useIonViewDidEnter(() => setPageTitle(`${song?.title} by ${song?.author}`))
     return song ?
@@ -55,7 +62,21 @@ const SongDetailsPage: React.FC = () => {
                 </IonPopover>
             </IonHeader>
             <IonContent>
-                {JSON.stringify(song)}
+                <IonList lines={"none"}>
+                    {formattedContent.map(group => <div>
+                        {
+                            group.simpleChords.length > 0 &&
+                            <IonItemDivider sticky>
+                                <IonLabel className={"ion-text-wrap chords"} color={"danger"}>
+                                    {
+                                        group.chords.map((chords, index) => <p>{group.simpleChords[index]}</p>)
+                                    }
+                                </IonLabel>
+                            </IonItemDivider>
+                        }
+                        {group.textLines.map(textLine=><IonItem className={"lyrics-item"}>{textLine}</IonItem>)}
+                    </div>)}
+                </IonList>
             </IonContent>
         </IonPage>
         : <Redirect to={"/song"}/>
