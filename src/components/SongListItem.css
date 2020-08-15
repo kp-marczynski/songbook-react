@@ -3,6 +3,7 @@
     padding-top: 10px;
     background-color: var(--ion-item-background);
     border-bottom: 1px solid var(--ion-border-color);
+    width: 100%;
 }
 
 .song-list-item:hover {

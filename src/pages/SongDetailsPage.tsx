@@ -24,7 +24,6 @@ import {attributePredicate, removeSong, selectSongsBy} from "../store/songs";
 import {parseChordPro} from "../utils/chordpro";
 
 import "./SongDetailsPage.css"
-import {IChordProGroup} from "../model/chord-pro-group.model";
 
 const SongDetailsPage: React.FC = () => {
     const [showActionSheet, setShowActionSheet] = useState(false);
@@ -63,18 +62,18 @@ const SongDetailsPage: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <IonList lines={"none"}>
-                    {formattedContent.map(group => <div>
+                    {formattedContent.map((group, groupIndex) => <div key={groupIndex}>
                         {
                             group.simpleChords.length > 0 &&
                             <IonItemDivider sticky>
                                 <IonLabel className={"ion-text-wrap chords"} color={"danger"}>
                                     {
-                                        group.chords.map((chords, index) => <p>{group.simpleChords[index]}</p>)
+                                        group.chords.map((chords, chordsIndex) => <p key={chordsIndex}>{group.simpleChords[chordsIndex]}</p>)
                                     }
                                 </IonLabel>
                             </IonItemDivider>
                         }
-                        {group.textLines.map(textLine=><IonItem className={"lyrics-item"}>{textLine}</IonItem>)}
+                        {group.textLines.map((textLine, lineIndex)=><IonItem key={lineIndex} className={"lyrics-item"}>{textLine}</IonItem>)}
                     </div>)}
                 </IonList>
             </IonContent>

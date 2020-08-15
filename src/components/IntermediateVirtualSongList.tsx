@@ -1,6 +1,5 @@
 import {Song} from "../model/Song.model";
 import React from "react";
-import SongListItem from "./SongListItem";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {FixedSizeList} from "react-window";
 import IntermediateSongListItem from "./IntermediateSongListItem";

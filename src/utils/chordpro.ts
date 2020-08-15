@@ -12,12 +12,9 @@ function parseSongsFromChordProFileRecursive(chordProSongs: string[], index: num
     if (index < chordProSongs.length) {
         console.log((index + 1) + ' of ' + chordProSongs.length);
         const song = chordProSongs[index];
-        let title = song.match('{title:.+}');
-        if (!title || !title[0]) {
-            title = song.match('{t:.+}');
-        }
-        const author = song.match('{artist:.+}');
-        const language = song.match('{language:.+}');
+        const title = song.match('{(title|t):.+}');
+        const author = song.match('{(artist|a):.+}');
+        const language = song.match('{(language|l):.+}');
         const result = parseSongsFromChordProFileRecursive(chordProSongs, index + 1, callback);
         if (title && author && language) {
             result.push({

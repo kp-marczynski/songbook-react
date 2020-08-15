@@ -6,7 +6,7 @@ import './SongListItem.css'
 
 interface OwnProps {
     song: Song,
-    style: any
+    style?: any
 }
 
 const SongListItem: React.FC<OwnProps> = ({song, style}) => {

@@ -1,0 +1,7 @@
+.tabs {
+    height: 56px;
+}
+
+.tabs > * {
+    min-height: 56px;
+}

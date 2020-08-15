@@ -1,5 +1,5 @@
 import './SongListItem.css'
-import {IonAvatar, IonBadge, IonButton, IonCol, IonIcon, IonItem, IonLabel, IonRow} from "@ionic/react";
+import {IonCol, IonIcon, IonLabel, IonRow} from "@ionic/react";
 import React from "react";
 import {useHistory, useLocation} from "react-router";
 import {chevronForward} from "ionicons/icons";

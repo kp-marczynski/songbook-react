@@ -6,13 +6,11 @@ import {
     IonHeader,
     IonIcon,
     IonPage,
-    IonTitle,
     IonToolbar,
     useIonViewDidEnter
 } from '@ionic/react';
 import {useSelector} from 'react-redux';
 import {useParams} from "react-router";
-import {Link} from "react-router-dom";
 import VirtualSongList from "../components/VirtualSongList";
 import {setPageTitle} from "../utils/title";
 import {add} from "ionicons/icons";
@@ -20,6 +18,7 @@ import {attributePredicate, selectSongsBy} from "../store/songs";
 import IntermediateVirtualSongList from "../components/IntermediateVirtualSongList";
 import {Song} from "../model/Song.model";
 import * as shortId from 'shortid';
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const SongListPage: React.FC = () => {
     const selector = useSelector(selectSongsBy)
@@ -31,10 +30,7 @@ const SongListPage: React.FC = () => {
     return <IonPage>
         <IonHeader>
             <IonToolbar>
-                <IonTitle>
-                    <Link to={"/song"}>All songs</Link>
-                    {author && <span> / <Link to={author}>{author}</Link></span>}
-                </IonTitle>
+                <Breadcrumbs author={author}/>
             </IonToolbar>
         </IonHeader>
         <IonContent>
@@ -43,11 +39,6 @@ const SongListPage: React.FC = () => {
                     <IonIcon icon={add}/>
                 </IonFabButton>
             </IonFab>
-            <IonHeader collapse="condense">
-                <IonToolbar>
-                    <IonTitle size="large">Tab 1</IonTitle>
-                </IonToolbar>
-            </IonHeader>
             {author
                 ? <VirtualSongList songs={songs}/>
                 : <IntermediateVirtualSongList
