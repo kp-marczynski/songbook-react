@@ -10,6 +10,7 @@ import SongEditPage from "./pages/SongEditPage";
 import './Tabs.css'
 import SongListItem from "./components/SongListItem";
 import SegmentNavigationButton from "./components/SegmentNavigationButton";
+import RtcDemoPage from "./pages/RtcDemoPage";
 
 const Tabs: React.FC = () =>{
     const location= useLocation()
@@ -25,6 +26,7 @@ const Tabs: React.FC = () =>{
                 <IonToolbar>
                     <IonSegment className="tabs" mode="md" value={tab}>
                         <SegmentNavigationButton url={"song"} title={"Songs"} icon={musicalNotes}/>
+                        <SegmentNavigationButton url={"rtc"} title={"RTC"} icon={settings}/>
                         <SegmentNavigationButton url={"settings"} title={"Settings"} icon={settings}/>
                     </IonSegment>
                 </IonToolbar>
@@ -38,6 +40,8 @@ const Tabs: React.FC = () =>{
                     <Route path="/song/new/:songId" component={SongEditPage} exact={true}/>
                     <Route path="/queue" component={QueuePage}/>
                     <Route path="/settings" component={SettingsPage}/>
+                    <Route path="/rtc" component={RtcDemoPage}/>
+                    <Route path="/rtc/guest" component={RtcDemoPage}/>
                     <Route path="/" render={() => <Redirect to="/song"/>} exact={true}/>
                 </IonRouterOutlet>
             </IonContent>
